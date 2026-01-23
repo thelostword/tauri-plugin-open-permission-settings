@@ -1,0 +1,21 @@
+[package]
+name = "tauri-plugin-open-permission-settings"
+version = "0.1.0"
+authors = [ "losting" ]
+description = "A Tauri plugin to open app permission settings page on Android and iOS"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/thelostword/tauri-plugin-open-permission-settings"
+keywords = ["tauri", "plugin", "permissions", "android", "ios"]
+categories = ["gui", "api-bindings", "os"]
+rust-version = "1.77.2"
+exclude = ["/examples", "/dist-js", "/guest-js", "/node_modules"]
+links = "tauri-plugin-open-permission-settings"
+
+[dependencies]
+tauri = { version = "2.9.5" }
+serde = "1.0"
+thiserror = "2"
+
+[build-dependencies]
+tauri-plugin = { version = "2.5.2", features = ["build"] }

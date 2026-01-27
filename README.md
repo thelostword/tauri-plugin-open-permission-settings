@@ -10,14 +10,6 @@ A Tauri plugin for opening the app's permission settings page on Android and iOS
 | Android  | ✓         |
 | iOS      | ✓         |
 
-## Features
-
-- ✅ **Android Support** - Opens specific permission settings pages
-- ✅ **iOS Support** - Opens app settings page in Settings app
-- 🚀 **Simple API** - Single function call with optional permission type
-- 📦 **TypeScript Support** - Full type definitions included
-- 🎯 **11 Permission Types** - Fine-grained control on Android
-- 🔋 **Special Actions** - Battery optimization request dialog on Android
 
 ## Install
 
@@ -98,75 +90,25 @@ async function handleOpenNotificationSettings() {
   const result = await openSettings('notification');
   console.log(result);
 }
-
-// Request battery optimization permission (Android shows dialog, iOS ignores)
-async function handleRequestBatteryOptimization() {
-  const result = await openSettings('request_battery_optimization');
-  console.log(result);
-}
-```
-
-## API
-
-### `openSettings(permissionType?: PermissionType)`
-
-Opens the app's permission settings page.
-
-**Parameters:**
-- `permissionType` (optional): Specific permission type to open (see Permission Types table below)
-
-**Returns:**
-```typescript
-Promise<{
-  success: boolean;
-  message?: string;
-}>
 ```
 
 ## Permission Types
 
-| Permission Type | Behavior | Description |
-|----------------|----------|-------------|
-| `app_details` | Jump to settings | App details/settings page (default) |
-| `battery_optimization` | Jump to settings | Battery optimization settings |
-| `request_battery_optimization` | Dialog (Android) / Ignored (iOS) | Request battery optimization permission |
-| `notification` | Jump to settings | Notification settings |
-| `app_permissions` | Jump to settings | App permissions page |
-| `overlay` | Jump to settings | Display over other apps |
-| `accessibility` | Jump to settings | Accessibility services |
-| `usage_access` | Jump to settings | Usage stats permission |
-| `vpn` | Jump to settings | VPN settings |
-| `write_settings` | Jump to settings | Modify system settings |
-| `default_apps` | Jump to settings | Default apps settings |
+| Permission Type | Description |
+|----------------|-------------|
+| `app_details` | App details/settings page (default) |
+| `battery_optimization` | Battery optimization settings |
+| `notification` | Notification settings |
+| `app_permissions` | App permissions page |
+| `overlay` | Display over other apps |
+| `accessibility` | Accessibility services |
+| `usage_access` | Usage stats permission |
+| `vpn` | VPN settings |
+| `write_settings` | Modify system settings |
+| `default_apps` | Default apps settings |
 
 > **Note:** iOS opens the unified app settings page for all types. Android opens specific permission pages. Minimum Android version: API 24 (Android 7.0).
 
-## Platform Behavior
-
-- **Android (API 24+)**: Opens specific permission settings pages. Supports 11 permission types.
-- **iOS**: Opens unified app settings page. All permission types work identically (except `request_battery_optimization` is ignored).
-- **Desktop**: Not supported, returns error.
-
-## Common Use Cases
-
-### 1. Permission Denial Guidance
-
-```typescript
-import { openSettings } from 'tauri-plugin-open-permission-settings';
-
-async function requestPermission() {
-  const hasPermission = await checkCameraPermission();
-  
-  if (!hasPermission) {
-    const shouldOpen = confirm(
-      'Camera permission is required. Would you like to open settings?'
-    );
-    
-    if (shouldOpen) {
-      await openSettings();
-    }
-  }
-}
 ```
 
 ## Credits and Thanks

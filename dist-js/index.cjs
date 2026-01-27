@@ -19,10 +19,6 @@ var core = require('@tauri-apps/api/core');
  * await openSettings('battery_optimization');
  *
  * @example
- * // 请求电池优化权限（弹出对话框）
- * await openSettings('request_battery_optimization');
- *
- * @example
  * // 打开通知设置
  * await openSettings('notification');
  */

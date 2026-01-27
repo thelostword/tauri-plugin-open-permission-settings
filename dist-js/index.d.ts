@@ -2,7 +2,6 @@
  * Android 权限类型
  * - app_details: 应用详情页面（默认）
  * - battery_optimization: 电池优化设置页面（跳转到设置）
- * - request_battery_optimization: 请求电池优化权限（弹出对话框，特殊操作）
  * - notification: 通知设置
  * - app_permissions: 应用权限页面
  * - overlay: 悬浮窗权限
@@ -12,7 +11,7 @@
  * - write_settings: 写入系统设置权限
  * - default_apps: 默认应用设置
  */
-export type PermissionType = 'app_details' | 'battery_optimization' | 'request_battery_optimization' | 'notification' | 'app_permissions' | 'overlay' | 'accessibility' | 'usage_access' | 'vpn' | 'write_settings' | 'default_apps';
+export type PermissionType = 'app_details' | 'battery_optimization' | 'notification' | 'app_permissions' | 'overlay' | 'accessibility' | 'usage_access' | 'vpn' | 'write_settings' | 'default_apps';
 /**
  * Opens the app's permission settings page.
  * On Android, supports multiple settings pages based on permissionType.
@@ -28,10 +27,6 @@ export type PermissionType = 'app_details' | 'battery_optimization' | 'request_b
  * @example
  * // 打开电池优化设置页面
  * await openSettings('battery_optimization');
- *
- * @example
- * // 请求电池优化权限（弹出对话框）
- * await openSettings('request_battery_optimization');
  *
  * @example
  * // 打开通知设置

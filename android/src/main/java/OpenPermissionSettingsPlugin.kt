@@ -32,9 +32,6 @@ class OpenPermissionSettingsPlugin(private val activity: Activity): Plugin(activ
                 // 电池优化 - 打开设置页面（与其他权限行为一致）
                 "battery_optimization" -> createBatteryOptimizationSettingsIntent()
 
-                // 请求电池优化权限 - 直接弹出权限申请对话框（特殊操作）
-                "request_battery_optimization" -> createBatteryOptimizationRequestIntent()
-
                 // 通知设置
                 "notification" -> createNotificationIntent()
 
@@ -86,18 +83,7 @@ class OpenPermissionSettingsPlugin(private val activity: Activity): Plugin(activ
 
     private fun createBatteryOptimizationSettingsIntent(): Intent {
         // 打开电池优化设置列表页，用户需要手动找到应用
-        // 与其他权限设置保持一致的行为（跳转到设置页面）
         return Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-    }
-
-    private fun createBatteryOptimizationRequestIntent(): Intent {
-        // 直接弹出电池优化权限请求对话框（特殊操作）
-        // 注意：用户拒绝后下次仍会弹出，不会被永久拒绝
-        // 这是一个主动请求权限的操作，而非跳转到设置页面
-        return Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
-            data = Uri.parse("package:${activity.packageName}")
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
     }

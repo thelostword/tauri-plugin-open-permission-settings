@@ -4,7 +4,6 @@ import { invoke } from '@tauri-apps/api/core'
  * Android 权限类型
  * - app_details: 应用详情页面（默认）
  * - battery_optimization: 电池优化设置页面（跳转到设置）
- * - request_battery_optimization: 请求电池优化权限（弹出对话框，特殊操作）
  * - notification: 通知设置
  * - app_permissions: 应用权限页面
  * - overlay: 悬浮窗权限
@@ -17,7 +16,6 @@ import { invoke } from '@tauri-apps/api/core'
 export type PermissionType =
   | 'app_details'
   | 'battery_optimization'
-  | 'request_battery_optimization'
   | 'notification'
   | 'app_permissions'
   | 'overlay'
@@ -42,10 +40,6 @@ export type PermissionType =
  * @example
  * // 打开电池优化设置页面
  * await openSettings('battery_optimization');
- *
- * @example
- * // 请求电池优化权限（弹出对话框）
- * await openSettings('request_battery_optimization');
  *
  * @example
  * // 打开通知设置

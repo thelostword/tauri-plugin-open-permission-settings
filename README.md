@@ -109,8 +109,6 @@ async function handleOpenNotificationSettings() {
 
 > **Note:** iOS opens the unified app settings page for all types. Android opens specific permission pages. Minimum Android version: API 24 (Android 7.0).
 
-```
-
 ## Credits and Thanks
 
 - [plugins-workspace](https://github.com/tauri-apps/plugins-workspace) - For showing me how to build Tauri Plugins

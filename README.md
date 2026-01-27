@@ -29,7 +29,7 @@ Install the Core plugin by adding the following to your `Cargo.toml` file:
 
 ```toml
 [dependencies]
-tauri-plugin-open-permission-settings = "0.1.0"
+# tauri-plugin-open-permission-settings = "0.2.0"
 # alternatively with Git:
 tauri-plugin-open-permission-settings = { git = "https://github.com/thelostword/tauri-plugin-open-permission-settings", branch = "main" }
 ```

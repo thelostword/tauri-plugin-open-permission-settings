@@ -12,10 +12,12 @@ A Tauri plugin for opening the app's permission settings page on Android and iOS
 
 ## Features
 
-- ✅ **Android Support** - Opens app details page in system settings
+- ✅ **Android Support** - Opens specific permission settings pages
 - ✅ **iOS Support** - Opens app settings page in Settings app
-- 🚀 **Simple API** - Single function call to open settings
+- 🚀 **Simple API** - Single function call with optional permission type
 - 📦 **TypeScript Support** - Full type definitions included
+- 🎯 **11 Permission Types** - Fine-grained control on Android
+- 🔋 **Special Actions** - Battery optimization request dialog on Android
 
 ## Install
 
@@ -77,7 +79,7 @@ Afterwards all the plugin's APIs are available through the JavaScript guest bind
 ```typescript
 import { openSettings } from 'tauri-plugin-open-permission-settings';
 
-// Open the app's permission settings page
+// Open the app's default settings page
 async function handleOpenSettings() {
   try {
     const result = await openSettings();
@@ -90,16 +92,28 @@ async function handleOpenSettings() {
     console.error('Error opening settings:', error);
   }
 }
+
+// Open specific permission settings (Android specific, iOS opens unified settings)
+async function handleOpenNotificationSettings() {
+  const result = await openSettings('notification');
+  console.log(result);
+}
+
+// Request battery optimization permission (Android shows dialog, iOS ignores)
+async function handleRequestBatteryOptimization() {
+  const result = await openSettings('request_battery_optimization');
+  console.log(result);
+}
 ```
 
 ## API
 
-### `openSettings(permissionType?: string)`
+### `openSettings(permissionType?: PermissionType)`
 
 Opens the app's permission settings page.
 
 **Parameters:**
-- `permissionType` (optional): Specific permission type (reserved for future extensions)
+- `permissionType` (optional): Specific permission type to open (see Permission Types table below)
 
 **Returns:**
 ```typescript
@@ -109,16 +123,29 @@ Promise<{
 }>
 ```
 
+## Permission Types
+
+| Permission Type | Behavior | Description |
+|----------------|----------|-------------|
+| `app_details` | Jump to settings | App details/settings page (default) |
+| `battery_optimization` | Jump to settings | Battery optimization settings |
+| `request_battery_optimization` | Dialog (Android) / Ignored (iOS) | Request battery optimization permission |
+| `notification` | Jump to settings | Notification settings |
+| `app_permissions` | Jump to settings | App permissions page |
+| `overlay` | Jump to settings | Display over other apps |
+| `accessibility` | Jump to settings | Accessibility services |
+| `usage_access` | Jump to settings | Usage stats permission |
+| `vpn` | Jump to settings | VPN settings |
+| `write_settings` | Jump to settings | Modify system settings |
+| `default_apps` | Jump to settings | Default apps settings |
+
+> **Note:** iOS opens the unified app settings page for all types. Android opens specific permission pages. Minimum Android version: API 24 (Android 7.0).
+
 ## Platform Behavior
 
-### Android
-Opens the app's detail page in system settings (`Settings.ACTION_APPLICATION_DETAILS_SETTINGS`) where users can manage all app permissions.
-
-### iOS
-Opens the app's settings page in the Settings app (`UIApplication.openSettingsURLString`) where users can manage app permissions.
-
-### Desktop
-Returns `{ success: false, message: "Opening permission settings is not supported on desktop platforms" }`.
+- **Android (API 24+)**: Opens specific permission settings pages. Supports 11 permission types.
+- **iOS**: Opens unified app settings page. All permission types work identically (except `request_battery_optimization` is ignored).
+- **Desktop**: Not supported, returns error.
 
 ## Common Use Cases
 

@@ -1,12 +1,12 @@
 [package]
 name = "tauri-plugin-open-permission-settings"
-version = "0.1.0"
+version = "0.2.0"
 authors = [ "losting" ]
 description = "A Tauri plugin to open app permission settings page on Android and iOS"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/thelostword/tauri-plugin-open-permission-settings"
-keywords = ["tauri", "plugin", "permissions", "android", "ios"]
+keywords = ["tauri", "plugin", "permissions page", "app details", "android", "ios"]
 categories = ["gui", "api-bindings", "os"]
 rust-version = "1.77.2"
 exclude = ["/examples", "/dist-js", "/guest-js", "/node_modules"]

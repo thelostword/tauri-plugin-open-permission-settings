@@ -8,7 +8,8 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        minSdk = 21
+        // 最低支持 Android 7.0 (API 24)
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

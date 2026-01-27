@@ -35,7 +35,9 @@ impl<R: Runtime, T: Manager<R>> crate::OpenPermissionSettingsExt<R> for T {
 /// Initializes the plugin.
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
   Builder::new("open-permission-settings")
-    .invoke_handler(tauri::generate_handler![commands::open_settings])
+    .invoke_handler(tauri::generate_handler![
+        commands::open_settings
+    ])
     .setup(|app, api| {
       #[cfg(mobile)]
       let open_permission_settings = mobile::init(app, api)?;

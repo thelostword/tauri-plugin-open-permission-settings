@@ -11,6 +11,15 @@ class OpenPermissionSettingsPlugin: Plugin {
   @objc public func openSettings(_ invoke: Invoke) throws {
     let args = try invoke.parseArgs(OpenSettingsArgs.self)
 
+    // iOS 不支持电池优化请求，直接返回成功（Android 特有功能）
+    if args.permissionType == "request_battery_optimization" {
+      invoke.resolve([
+        "success": true,
+        "message": "Battery optimization is not applicable on iOS"
+      ])
+      return
+    }
+
     // 在主线程打开设置页
     DispatchQueue.main.async {
       if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {

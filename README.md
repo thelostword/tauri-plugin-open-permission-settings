@@ -99,13 +99,9 @@ async function handleOpenNotificationSettings() {
 | `app_details` | App details/settings page (default) |
 | `battery_optimization` | Battery optimization settings |
 | `notification` | Notification settings |
-| `app_permissions` | App permissions page |
 | `overlay` | Display over other apps |
-| `accessibility` | Accessibility services |
 | `usage_access` | Usage stats permission |
-| `vpn` | VPN settings |
 | `write_settings` | Modify system settings |
-| `default_apps` | Default apps settings |
 
 > **Note:** iOS opens the unified app settings page for all types. Android opens specific permission pages. Minimum Android version: API 24 (Android 7.0).
 

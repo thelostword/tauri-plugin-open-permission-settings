@@ -35,26 +35,14 @@ class OpenPermissionSettingsPlugin(private val activity: Activity): Plugin(activ
                 // 通知设置
                 "notification" -> createNotificationIntent()
 
-                // 应用权限页面
-                "app_permissions" -> createAppPermissionsIntent()
-
                 // 悬浮窗权限
                 "overlay" -> createOverlayIntent()
-
-                // 无障碍服务
-                "accessibility" -> createAccessibilityIntent()
 
                 // 使用统计权限
                 "usage_access" -> createUsageAccessIntent()
 
-                // VPN 设置
-                "vpn" -> createVpnIntent()
-
                 // 写入系统设置权限
                 "write_settings" -> createWriteSettingsIntent()
-
-                // 默认应用设置
-                "default_apps" -> createDefaultAppsIntent()
 
                 else -> createAppDetailsIntent()
             }
@@ -101,50 +89,11 @@ class OpenPermissionSettingsPlugin(private val activity: Activity): Plugin(activ
         }
     }
 
-    private fun createAppPermissionsIntent(): Intent {
-        // 尝试直接跳转到应用权限页面
-        // 注意：Android 标准 API 不支持直接跳转到应用的权限列表页
-        // 部分设备可能支持厂商定制的 Intent
-        return try {
-            // 尝试使用一些设备可能支持的 Intent
-            val intent = Intent("android.settings.APPLICATION_DETAILS_SETTINGS")
-            intent.data = Uri.fromParts("package", activity.packageName, null)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-
-            // 尝试添加额外参数，某些设备可能会直接打开权限页
-            intent.putExtra(":settings:show_fragment", "com.android.settings.applications.AppPermissionsFragment")
-            intent.putExtra(":settings:show_fragment_args", android.os.Bundle().apply {
-                putString("package", activity.packageName)
-            })
-
-            intent
-        } catch (e: Exception) {
-            // 如果失败，降级到应用详情页
-            createAppDetailsIntent()
-        }
-    }
-
     private fun createOverlayIntent(): Intent {
         // 直接跳转到悉浮窗权限设置页
         return Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION).apply {
             data = Uri.fromParts("package", activity.packageName, null)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-    }
-
-    private fun createAccessibilityIntent(): Intent {
-        // 尝试直接跳转到应用的无障碍服务设置
-        // 注意：大多数设备不支持直接跳转，会自动降级到列表页
-        return try {
-            Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).apply {
-                data = Uri.fromParts("package", activity.packageName, null)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-        } catch (e: Exception) {
-            // 降级到无障碍服务列表页
-            Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
         }
     }
 
@@ -161,35 +110,10 @@ class OpenPermissionSettingsPlugin(private val activity: Activity): Plugin(activ
         }
     }
 
-    private fun createVpnIntent(): Intent {
-        // 尝试直接跳转到应用的 VPN 设置
-        // 注意：大多数设备不支持直接跳转，会自动打开 VPN 列表
-        return Intent(Settings.ACTION_VPN_SETTINGS).apply {
-            try {
-                data = Uri.fromParts("package", activity.packageName, null)
-            } catch (e: Exception) {
-                // 忽略错误，会打开 VPN 列表页
-            }
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-    }
-
     private fun createWriteSettingsIntent(): Intent {
         // 直接跳转到写入系统设置权限页
         return Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS).apply {
             data = Uri.fromParts("package", activity.packageName, null)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-    }
-
-    private fun createDefaultAppsIntent(): Intent {
-        // 尝试直接跳转到应用的默认应用设置
-        return Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS).apply {
-            try {
-                data = Uri.fromParts("package", activity.packageName, null)
-            } catch (e: Exception) {
-                // 忽略错误，会打开默认应用列表页
-            }
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
     }

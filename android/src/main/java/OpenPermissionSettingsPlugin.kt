@@ -102,19 +102,24 @@ class OpenPermissionSettingsPlugin(private val activity: Activity): Plugin(activ
     }
 
     private fun createAppPermissionsIntent(): Intent {
-        // Android 11+ 支持直接跳转到应用的权限管理页面
-        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-            try {
-                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_APPS_PERMISSION_SETTINGS)
-                intent.data = Uri.fromParts("package", activity.packageName, null)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                intent
-            } catch (e: Exception) {
-                // 某些设备可能不支持，降级到应用详情页
-                createAppDetailsIntent()
-            }
-        } else {
-            // 低版本降级到应用详情页
+        // 尝试直接跳转到应用权限页面
+        // 注意：Android 标准 API 不支持直接跳转到应用的权限列表页
+        // 部分设备可能支持厂商定制的 Intent
+        return try {
+            // 尝试使用一些设备可能支持的 Intent
+            val intent = Intent("android.settings.APPLICATION_DETAILS_SETTINGS")
+            intent.data = Uri.fromParts("package", activity.packageName, null)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+            // 尝试添加额外参数，某些设备可能会直接打开权限页
+            intent.putExtra(":settings:show_fragment", "com.android.settings.applications.AppPermissionsFragment")
+            intent.putExtra(":settings:show_fragment_args", android.os.Bundle().apply {
+                putString("package", activity.packageName)
+            })
+
+            intent
+        } catch (e: Exception) {
+            // 如果失败，降级到应用详情页
             createAppDetailsIntent()
         }
     }

@@ -105,10 +105,10 @@ class OpenPermissionSettingsPlugin(private val activity: Activity): Plugin(activ
         // Android 11+ 支持直接跳转到应用的权限管理页面
         return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
             try {
-                Intent(Settings.ACTION_MANAGE_APP_PERMISSIONS).apply {
-                    data = Uri.fromParts("package", activity.packageName, null)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_APPS_PERMISSION_SETTINGS)
+                intent.data = Uri.fromParts("package", activity.packageName, null)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent
             } catch (e: Exception) {
                 // 某些设备可能不支持，降级到应用详情页
                 createAppDetailsIntent()

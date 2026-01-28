@@ -3,15 +3,11 @@
  * - app_details: 应用详情页面（默认）
  * - battery_optimization: 电池优化设置页面（跳转到设置）
  * - notification: 通知设置
- * - app_permissions: 应用权限页面
  * - overlay: 悬浮窗权限
- * - accessibility: 无障碍服务
  * - usage_access: 使用统计权限
- * - vpn: VPN 设置
  * - write_settings: 写入系统设置权限
- * - default_apps: 默认应用设置
  */
-export type PermissionType = 'app_details' | 'battery_optimization' | 'notification' | 'app_permissions' | 'overlay' | 'accessibility' | 'usage_access' | 'vpn' | 'write_settings' | 'default_apps';
+export type PermissionType = 'app_details' | 'battery_optimization' | 'notification' | 'overlay' | 'usage_access' | 'write_settings';
 /**
  * Opens the app's permission settings page.
  * On Android, supports multiple settings pages based on permissionType.
